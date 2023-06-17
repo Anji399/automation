@@ -1,0 +1,29 @@
+{
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "region": "us-east-1",
+      "source_ami": "ami-022e1a32d3f742bd8",
+      "instance_type": "t2.micro",
+      "ssh_username": "ec2-user",
+      "ami_name": "mpr-ami {{timestamp}}"
+    }
+  ],
+  "provisioners": [
+    
+       {
+      "type": "shell",
+      "inline": [
+      "sudo yum -y update",
+      "sudo yum install python3 -y",
+      "sudo yum install python3-pip -y",
+      "sudo pip install ansible"
+      
+  ]},
+    {
+      "type": "ansible-local",
+      "playbook_file": "nexus-install.yml"
+    }
+    ]
+  
+}
